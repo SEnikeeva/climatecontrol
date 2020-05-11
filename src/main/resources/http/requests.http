@@ -1,0 +1,34 @@
+POST http://localhost:8070/inds
+Content-Type: application/json
+
+{
+  "token" : "sidikov.marsel@gmail.com",
+  "tempIn": "23.5"
+}
+###
+POST http://localhost:8070/signIn
+Content-Type: application/json
+
+{
+"email" : "sumbel.enikeeva@gmail.com",
+"password": "1"
+}
+
+
+
+###
+
+GET http://localhost/users
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzOCIsIm5hbWUiOiJNYXJzZWwiLCJyb2xlIjoiVVNFUiJ9.WMLPlhJde_d2QbAiYwPutOLBOuc7NV4cLLq9O5BRAdQ
+
+###
+
+DELETE http://localhost/users/39
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzOCIsIm5hbWUiOiJNYXJzZWwiLCJyb2xlIjoiQURNSU4ifQ.r3PxYzFY68eqyPgUEGXz0BMsj6Ej2ZU9yqCHJ4xqsuY
+
+###
+
+GET http://localhost/self
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzOCIsIm5hbWUiOiJNYXJzZWwiLCJyb2xlIjoiQURNSU4ifQ.r3PxYzFY68eqyPgUEGXz0BMsj6Ej2ZU9yqCHJ4xqsuY
+
+###

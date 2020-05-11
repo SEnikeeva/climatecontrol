@@ -1,0 +1,19 @@
+-- auto-generated definition
+create table indication
+(
+  id          serial not null,
+  token       varchar(255),
+  tempin      double precision,
+  tempout     double precision,
+  humidityin  double precision,
+  humidityout double precision,
+  humiditybot double precision,
+  pressure    double precision,
+  date        timestamp
+);
+
+alter table indication
+  owner to postgres;
+
+create unique index indication_id_uindex
+  on indication (id);
