@@ -1,14 +1,15 @@
-package ru.itis.dto;
+package ru.itis.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatDto {
-    Integer userId;
+@Data
+@Builder
+public class Task {
+    private Integer userId;
+    private Runnable task;
 }

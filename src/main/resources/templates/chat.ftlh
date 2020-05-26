@@ -11,9 +11,11 @@
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"></script>
     <script src="/static/js/chat.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 
-<body onload="sendMessage('${pageId}','${userId}','Login')">
+<body <#--onload="sendMessage('${pageId}','${userId}','Login')"-->>
 <h1>Chat id - ${pageId}</h1>
 <div>
     <input id="message" placeholder="Your message">
@@ -21,15 +23,20 @@
             $('#message').val())">SEND
     </button>
 </div>
+<script type="application/javascript">
+    receiveMessage('${pageId}', '${userId}');
+</script>
 <div>
     <table id="messages">
         <tr>
             <td>User</td>
+            <td>Time</td>
             <td>Message</td>
         </tr>
         <#list history as message>
             <tr>
                 <td>${message.sender.id}</td>
+                <td>${message.time}</td>
                 <td>${message.message}</td>
             </tr>
         </#list>

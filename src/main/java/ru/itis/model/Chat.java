@@ -20,8 +20,8 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+//    @Column(nullable = false)
+//    private String name;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")

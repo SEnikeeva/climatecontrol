@@ -40,8 +40,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
             Authentication authentication = new JwtAuthentication(token);
             return getAuthenticationManager().authenticate(authentication);
         } else {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            return authentication;
+            return SecurityContextHolder.getContext().getAuthentication();
         }
     }
 

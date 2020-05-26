@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import ru.itis.security.filter.JwtAuthenticationFilter;
 import ru.itis.security.handlers.AccessDeniedHandler;
@@ -41,7 +42,12 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.anonymous().principal("guest").authorities("GUEST_ROLE");
         http.csrf().disable();
         http.formLogin().disable();
+
         http.logout().disable();
+                /*.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .deleteCookies("SESSION", "remember-me", "cookieName")
+                .invalidateHttpSession(true)
+                .logoutSuccessUrl("/login?logout");*/
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterAt(tokenProcessingFilter(), BasicAuthenticationFilter.class);
         http.addFilterBefore(new AnonymousAuthenticationFilter("twrt454"), JwtAuthenticationFilter.class);

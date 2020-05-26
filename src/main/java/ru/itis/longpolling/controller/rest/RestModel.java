@@ -1,4 +1,4 @@
-package ru.itis.dto;
+package ru.itis.longpolling.controller.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,9 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatDto {
-    Integer userId;
+@Builder
+public class RestModel {
+
+    private Integer userid;
+
+    private String msg;
+
 }

@@ -8,6 +8,7 @@ import ru.itis.model.Message;
 import ru.itis.model.User;
 import ru.itis.repository.ChatRepository;
 import ru.itis.repository.MessageRepository;
+import ru.itis.repository.UserRepository;
 import ru.itis.service.ChatService;
 
 import java.util.List;
@@ -16,18 +17,20 @@ import java.util.List;
 public class ChatServiceImpl implements ChatService {
     @Autowired
     private ChatRepository repository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     MessageRepository messageRepository;
 
     @Override
-    public List<Message> history(Long id) {
-        return messageRepository.findByChat(id);
+    public List<Message> history(Integer id) {
+        return messageRepository.findByUser(id);
     }
 
     @Override
-    public void createChat(ChatDto chat, User user) {
+    public void createChat(ChatDto chat) {
         repository.save(Chat.builder()
-                .name(chat.getName()).user_id(user).build());
+                .user_id(userRepository.find(chat.getUserId()).get()).build());
     }
 }

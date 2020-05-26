@@ -8,6 +8,6 @@ import ru.itis.model.User;
 import java.util.List;
 
 public interface ChatService {
-    List<Message> history(Long id);
-    void createChat(ChatDto chat, User user);
+    List<Message> history(Integer id);
+    void createChat(ChatDto chat);
 }

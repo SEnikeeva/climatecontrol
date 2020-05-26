@@ -14,8 +14,9 @@
             </div>
         </form>
         <hr>
+
         <#list chats! as chat>
-            <a href="/chat/${chat.name}">${chat.name}</a>
+            <a href="/chat/${chat.user_id.id}">${chat.user_id.id}</a>
             <br>
         </#list>
     </@B.body>

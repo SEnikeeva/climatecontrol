@@ -49,10 +49,14 @@ public class ChatRepositoryJpaImpl implements ChatRepository {
     }
 
     @Override
-    public List<Chat> findChatByUserId(Integer user_id) {
-        Query query = entityManager.createQuery(FIND_BY_USER, Chat.class);
+    public Optional<Chat> findChatByUserId(Integer user_id) {
+        TypedQuery<Chat> query = entityManager.createQuery(FIND_BY_USER, Chat.class);
         query.setParameter("user_id", userRepository.find(user_id).get());
-        return (List<Chat>) query.getResultList();
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

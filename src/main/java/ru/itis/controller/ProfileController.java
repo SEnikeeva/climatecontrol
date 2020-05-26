@@ -13,7 +13,6 @@ import java.util.HashMap;
 
 @Controller
 public class ProfileController {
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/profile")
     public ModelAndView view(@AuthenticationPrincipal UserDetailsImpl userDetails) {

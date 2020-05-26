@@ -43,7 +43,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             UserDetailsImpl userDetails = UserDetailsImpl.builder()
                     .user(user.get())
                     .userId(id)
-                    .role("ROLE_" + claims.get("role", String.class))
+                    .role( claims.get("role", String.class))
                     .name(claims.get("name", String.class))
                     .build();
             authentication.setAuthenticated(true);

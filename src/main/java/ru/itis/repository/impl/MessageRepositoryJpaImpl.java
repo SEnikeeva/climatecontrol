@@ -1,11 +1,16 @@
 package ru.itis.repository.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.model.Message;
 import ru.itis.repository.ChatRepository;
 import ru.itis.repository.MessageRepository;
+import ru.itis.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,20 +20,36 @@ import java.util.Optional;
 
 @Repository
 @Transactional
+@PropertySource("classpath:application.properties")
+@ComponentScan(basePackages = "ru.itis")
 public class MessageRepositoryJpaImpl implements MessageRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    private ChatRepository chatRepository;
+    private UserRepository chatRepository;
+
+    @Value("${admin.id}")
+    private Integer admin;
+
 
     private static final String FIND_MESSAGES_BY_CHAT = "SELECT m FROM Message m WHERE m.chat_id = :chat_id";
+    private static final String FIND_MESSAGES_BY_USER = "SELECT m FROM Message m WHERE (m.sender = :user_id) OR (m.sender = :admin)" ;
+
+//    @Override
+//    public List<Message> findByChat(Long id) {
+//        Query query = entityManager.createQuery(FIND_MESSAGES_BY_CHAT, Message.class);
+//        query.setParameter("chat_id", chatRepository.find(id).get());
+//        return (List<Message>) query.getResultList();
+//    }
 
     @Override
-    public List<Message> findByChat(Long id) {
-        Query query = entityManager.createQuery(FIND_MESSAGES_BY_CHAT, Message.class);
-        query.setParameter("chat_id", chatRepository.find(id).get());
+    public List<Message> findByUser(Integer id) {
+        Query query = entityManager.createQuery(FIND_MESSAGES_BY_USER, Message.class);
+        query.setParameter("user_id", chatRepository.find(id).get());
+        query.setParameter("admin", chatRepository.find(admin).get());
+
         return (List<Message>) query.getResultList();
     }
 
