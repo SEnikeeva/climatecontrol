@@ -1,8 +1,9 @@
-package ru.itis.longpolling.repository;
+package ru.itis.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.itis.longpolling.controller.rest.RestModel;
+import ru.itis.dto.RestModel;
+import ru.itis.dto.Messages;
 import ru.itis.model.Message;
 import ru.itis.model.User;
 import ru.itis.repository.MessageRepository;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AdminRepository {
+public class AdminChatService {
     @Autowired
     MessageRepository messageRepository;
 

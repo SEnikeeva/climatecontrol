@@ -1,8 +1,9 @@
-package ru.itis.longpolling.repository;
+package ru.itis.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.itis.longpolling.controller.rest.RestModel;
+import ru.itis.dto.RestModel;
+import ru.itis.dto.Messages;
 import ru.itis.model.Message;
 import ru.itis.model.User;
 import ru.itis.repository.MessageRepository;
@@ -12,25 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserRepository {
+public class ChatUserService {
 
     @Autowired
     MessageRepository messageRepository;
 
     private Messages m = Messages.getInstance();
 
-    public List<RestModel> getAllMessages() {
 
-        List<RestModel> msgs = new ArrayList<>();
-
-        m.messages.forEach((userid, userMessages) -> {
-            for (String s : userMessages) {
-                msgs.add(new RestModel( userid, s));
-            }
-        });
-
-        return msgs;
-    }
 
     public synchronized List<RestModel> getMessage(Integer userId) {
 

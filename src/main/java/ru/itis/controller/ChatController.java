@@ -39,20 +39,20 @@ public class ChatController {
         } else {
             map.put("chats",
                     Collections.singletonList(repository
-                            .findChatByUserId(userDetails.getUserId()).get()));
+                            .findChatByUserId(userDetails.getUserId()).orElse(null)));
 
         }
 
         return new ModelAndView("chats", map);
     }
 
-//    @PreAuthorize("isAuthenticated()")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("permitAll()")
+//    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(value = "/chats")
-    public ModelAndView createChats(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                    ChatDto chat) {
+    public ModelAndView createChats(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        System.out.println(userDetails.getAuthorities());
         if (userDetails == null) return new ModelAndView("redirect:/signIn");
-        service.createChat(chat);
+        service.createChat(userDetails.getUser().getId());
         return new ModelAndView("redirect:/chats");
     }
 

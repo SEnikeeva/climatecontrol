@@ -24,12 +24,12 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
-//    @Override
-//    protected FrameworkServlet createDispatcherServlet (WebApplicationContext wac) {
-//        DispatcherServlet ds = new DispatcherServlet(wac);
-//        //setting this flag to true will throw NoHandlerFoundException instead of 404 page
-//        ds.setThrowExceptionIfNoHandlerFound(true);
-//        return ds;
-//    }
+    @Override
+    protected FrameworkServlet createDispatcherServlet (WebApplicationContext wac) {
+        DispatcherServlet ds = new DispatcherServlet(wac);
+        //setting this flag to true will throw NoHandlerFoundException instead of 404 page
+        ds.setThrowExceptionIfNoHandlerFound(true);
+        return ds;
+    }
 
 }

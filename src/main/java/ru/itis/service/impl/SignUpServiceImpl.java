@@ -8,6 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import ru.itis.dto.SignUpForm;
 import ru.itis.dto.TokenDto;
 import ru.itis.dto.UserConfirmDto;
 import ru.itis.model.Role;
@@ -78,5 +79,38 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public UserConfirmDto signUp(HttpServletRequest req) {
         return null;
+    }
+
+    @Override
+    public TokenDto signUp(SignUpForm form) {
+        userRepository.save( User.builder().email(form.getEmail())
+                .password(encoder.encode(form.getPassword()))
+                .confirmCode(UUID.randomUUID().toString())
+                .state(State.NOT_CONFIRMED)
+                .role(Role.USER)
+                .build());
+        Optional<User> userOptional = userRepository.findByEmail(form.getEmail());
+
+
+        if (userOptional.isPresent()) {
+            // получаем его
+            User user = userOptional.get();
+            // если пароль подходит
+            if (encoder.matches(form.getPassword(), user.getPassword())) {
+
+                Map<String, Object> root = new HashMap<>();
+                root.put("user", user);
+
+//              создаем токен
+                emailService.sendCode("Подтверждение", user.getEmail(), root);
+                String token = Jwts.builder()
+                        .setSubject(user.getId().toString()) // id пользователя
+                        .claim("email", user.getEmail()) // имя
+                        .claim("role", user.getRole().name()) // роль
+                        .signWith(SignatureAlgorithm.HS256, secret) // подписываем его с нашим secret
+                        .compact(); // преобразовали в строку
+                return new TokenDto(token);
+            } else throw new AccessDeniedException("Wrong email/password");
+        } else throw new AccessDeniedException("User not found");
     }
 }

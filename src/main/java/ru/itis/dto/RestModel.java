@@ -1,4 +1,4 @@
-package ru.itis.longpolling.controller.rest;
+package ru.itis.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,4 @@
-package ru.itis.longpolling.repository;
-
-import ru.itis.longpolling.controller.rest.RestModel;
+package ru.itis.dto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +19,7 @@ public class Messages {
 
     public Map<Integer, String> newmessage = new HashMap<>();
 
-    public Map<Integer, RestModel> fromadminmessage = new HashMap<Integer, ru.itis.longpolling.controller.rest.RestModel>();
+    public Map<Integer, RestModel> fromadminmessage = new HashMap<>();
 
 
 }

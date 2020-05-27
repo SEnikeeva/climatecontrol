@@ -106,19 +106,17 @@ public class ApplicationContextConfig {
         config.setJdbcUrl(environment.getProperty("spring.datasource.url"));
         config.setUsername(environment.getProperty("spring.datasource.username"));
         config.setPassword(environment.getProperty("spring.datasource.password"));
-//        config.setJdbcUrl(environment.getProperty("db.url"));
-//        config.setUsername(environment.getProperty("db.user"));
-//        config.setPassword(environment.getProperty("db.password"));
         config.setDriverClassName(environment.getProperty("db.driver"));
         return config;
     }
-   /* @Bean
-    public PasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }*/
+
     @Bean
     public DataSource hikariDataSource() {
         return new HikariDataSource(hikariConfig());
+    }
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

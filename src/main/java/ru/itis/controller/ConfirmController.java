@@ -1,6 +1,7 @@
 package ru.itis.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +19,13 @@ public class ConfirmController {
     @Autowired
     private ConfirmService service;
 
+    @PreAuthorize("permitAll()")
     @GetMapping(value = "/confirm")
     public ModelAndView confirm() {
         return new ModelAndView("confirm");
     }
 
+    @PreAuthorize("permitAll()")
     @PostMapping(value = "/confirm")
     protected ModelAndView confirm(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                    @RequestParam(value = "code") String code) {

@@ -37,10 +37,12 @@
                             <label class="form-check-label" for="exampleCheck1"><@spring.message "page.remember"/></label>
                         </div>
                     </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                     <input type="submit" class="btn btn-danger" value="<@spring.message 'page.login.button.submit'/>"/>
+                    <a href="/signUp" class="already"><@spring.message "signUp.label.registration"/></a>
                 </div>
                 <div class="col"></div>
-                <a href="/signUp" class="already"><@spring.message "signUp.label.registration"/></a>
+
 
             </div>
     </form>

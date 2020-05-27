@@ -1,4 +1,4 @@
-package ru.itis.controller;
+package ru.itis.controller.rest;
 
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;

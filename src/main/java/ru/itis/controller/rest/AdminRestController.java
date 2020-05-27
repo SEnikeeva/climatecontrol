@@ -1,10 +1,11 @@
-package ru.itis.longpolling.controller.rest;
+package ru.itis.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ru.itis.longpolling.repository.AdminRepository;
-import ru.itis.longpolling.repository.Messages;
+import ru.itis.dto.RestModel;
+import ru.itis.service.impl.AdminChatService;
+import ru.itis.dto.Messages;
 
 import java.util.List;
 
@@ -14,20 +15,12 @@ public class AdminRestController {
     private Messages m = Messages.getInstance();
 
     @Autowired
-    private AdminRepository repository;
+    private AdminChatService repository;
 
-    @PreAuthorize("permitAll()")
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @ResponseBody
-    @RequestMapping(value = "/admin/getall")
-    public RestModel getAllMessage() {
-
-        System.out.println("/admin/getall, thread " + Thread.currentThread().getId());
-
-        return new RestModel(1,"привет 1");
-    }
-    @PreAuthorize("permitAll()")
-    @ResponseBody
-    @RequestMapping(value = "/admin/get")
+    @RequestMapping(value = "/api/admin/get")
     public List<RestModel> getMessage() {
 
         System.out.println("/admin/get , thread " + Thread.currentThread().getId());
@@ -47,9 +40,9 @@ public class AdminRestController {
         return msgs;
     }
 
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @ResponseBody
-    @RequestMapping(value = "/admin/send/{userId}")
+    @RequestMapping(value = "/api/admin/send/{userId}")
     public RestModel getMessage(@RequestBody RestModel body, @PathVariable Integer userId) {
 
         System.out.println("/admin/send " + body.getUserid() + "," + body.getMsg() +

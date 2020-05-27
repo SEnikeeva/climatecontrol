@@ -29,8 +29,8 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void createChat(ChatDto chat) {
+    public void createChat(Integer id) {
         repository.save(Chat.builder()
-                .user_id(userRepository.find(chat.getUserId()).get()).build());
+                .user_id(userRepository.find(id).get()).build());
     }
 }

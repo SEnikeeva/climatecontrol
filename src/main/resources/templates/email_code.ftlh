@@ -1,5 +1,10 @@
-<#include "base.ftlh">
-<#macro content>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="view-port">
+    </head>
+    <body>
     <div class="text-red text-center" style="background-color: #e83e8c;">
         <h1> Hi, ${user.email}!</h1>
         <br>
@@ -16,6 +21,5 @@
         </h5>
 
     </div>
-</#macro>
-
-<@main/>
+    </body>
+</html>

@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ChatService {
     List<Message> history(Integer id);
-    void createChat(ChatDto chat);
+    void createChat(Integer id);
 }
