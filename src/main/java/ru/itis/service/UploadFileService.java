@@ -6,7 +6,7 @@ import ru.itis.dto.UserConfirmDto;
 import java.io.File;
 
 public interface UploadFileService {
-    void saveFile(MultipartFile file, UserConfirmDto user);
+    String saveFile(MultipartFile file,String email);
 
     File findFile(String fileName);
 }

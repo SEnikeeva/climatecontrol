@@ -82,7 +82,7 @@
                     <h3><@spring.message "chat"/></h3>
 
 
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
                     <div>
                         <table id="msgs">
                             <tr>

@@ -7,7 +7,7 @@
       <div class="container-fluid" style="padding-top: 10px">
           <br>
           <div class="row">
-          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+          <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
               <div class="rounded col-md-12 background-login" align="center">
                   <div class="text-red">
                       <span><h1>Confirmation</h1></span>

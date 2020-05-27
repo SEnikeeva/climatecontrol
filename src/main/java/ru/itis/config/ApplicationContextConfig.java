@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -46,6 +47,7 @@ import java.util.concurrent.Executors;
 @EnableSwagger2
 @EnableTransactionManagement
 @Component
+@EnableJpaRepositories("ru.itis.repository")
 /*@EnableScheduling
 @EnableAsync*/
 public class ApplicationContextConfig {

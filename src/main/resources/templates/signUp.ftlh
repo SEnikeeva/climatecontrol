@@ -39,7 +39,7 @@
                                 <@spring.formPasswordInput "signUpForm.password" "class='form-control'"/>
                                 <@spring.showErrors "<br>","error"/>
                             </div>
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                            <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
                             <br>
                             <input type="submit" class="btn btn-danger" value="<@spring.message 'page.registration.button.submit'/>"/>
                             <label>

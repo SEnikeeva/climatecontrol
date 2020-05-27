@@ -27,7 +27,8 @@
                                     for (i = 0; i < resp.length; i++) {
                                         var row = tbl.insertRow();
                                         var cell0 = row.insertCell(0);
-                                        cell0.innerHTML = resp[i]['userid'];
+
+                                        cell0.innerHTML = <@spring.message "admin"/>;
                                         var cell1 = row.insertCell(1);
                                         cell1.innerHTML = new Date().toLocaleString();
                                         var cell2 = row.insertCell(2);
@@ -78,7 +79,7 @@
                 <#--<h3><@spring.message "chat"/></h3>-->
 
 
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
                 <div>
                     <table id="msgs">
                         <tr>
@@ -88,7 +89,7 @@
                         </tr>
                             <#list history as message>
                                 <tr>
-                                    <td>${message.sender.id}</td>
+                                    <td><@spring.message "admin"/></td>
                                     <td>${message.time}</td>
                                     <td>${message.message}</td>
                                 </tr>

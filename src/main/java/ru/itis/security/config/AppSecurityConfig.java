@@ -108,7 +108,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
             http.authorizeRequests().antMatchers("/profile").authenticated();
             http.anonymous().principal("guest").authorities("GUEST_ROLE");
             http.rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository());
-//        http.csrf().disable();
+        http.csrf().disable();
             http.formLogin().disable();
        /*     http.formLogin()
                     .loginPage("/signIn")

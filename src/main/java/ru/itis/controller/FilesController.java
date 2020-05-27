@@ -2,14 +2,17 @@ package ru.itis.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itis.dto.UserConfirmDto;
+import ru.itis.repository.UserRepository;
+import ru.itis.security.defails.UserDetailsImpl;
 import ru.itis.service.UploadFileService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,11 +27,31 @@ public class FilesController {
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     @Autowired
-    UploadFileService fileService;
+    private UploadFileService fileService;
 
-    @RequestMapping(value = "/files", method =  RequestMethod.POST)
+    @PreAuthorize("permitAll()")
+    @PostMapping("/files")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
+        String email = userDetails.getUser().getEmail();
+        System.out.println(email);
+        return ResponseEntity.ok().body(fileService.saveFile(multipartFile, email));
+    }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/storage")
+    public String getStoragePage() {
+
+        return "files";
+    }
+
+ /*   @RequestMapping(value = "/files", method =  RequestMethod.POST)
     public ModelAndView uploadFile(@RequestParam("file") MultipartFile multipartFile, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("profile");
@@ -36,15 +59,16 @@ public class FilesController {
         modelAndView.addObject("user", user);
         fileService.saveFile(multipartFile, user);
         return modelAndView;
-    }
+    }*/
 
-    @RequestMapping(value ="/files" , method = RequestMethod.GET)
+/*    @RequestMapping(value ="/files" , method = RequestMethod.GET)
     public ModelAndView getFiles() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("files");
         return modelAndView;
-    }
+    }*/
 
+/*
     @RequestMapping(value = "/files/file", method =  RequestMethod.POST)
     public ModelAndView getFile(@RequestParam("filename") String filename, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
@@ -56,22 +80,37 @@ public class FilesController {
         System.out.println(filename);
         return modelAndView;
     }
+*/
+
+//    @RequestMapping(value = "/files/{file-name:.+}", method = RequestMethod.GET)
+//    public ModelAndView getFile(@PathVariable("file-name") String fileName, HttpSession session, HttpServletResponse response) {
+//        UserConfirmDto user = (UserConfirmDto) session.getAttribute("current_user");
+//        if (user != null) {
+//            File file = fileService.findFile(fileName);
+//            response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+//            response.setContentType("application/vnd.ms-excel");
+//            try {
+//                Files.copy(file.toPath(), response.getOutputStream());
+//                response.getOutputStream().flush();
+//            } catch (IOException e) {
+//                throw new RuntimeException("IOError writing file to output stream");
+//            }
+//        }
+//        return null;
+//    }
 
     @RequestMapping(value = "/files/{file-name:.+}", method = RequestMethod.GET)
-    public ModelAndView getFile(@PathVariable("file-name") String fileName, HttpSession session, HttpServletResponse response) {
-        UserConfirmDto user = (UserConfirmDto) session.getAttribute("current_user");
-        if (user != null) {
-            File file = fileService.findFile(fileName);
-            response.setHeader("Content-disposition", "attachment;filename=" + fileName);
-            response.setContentType("application/vnd.ms-excel");
-            try {
-                Files.copy(file.toPath(), response.getOutputStream());
-                response.getOutputStream().flush();
-            } catch (IOException e) {
-                throw new RuntimeException("IOError writing file to output stream");
-            }
+    public void getFile(@PathVariable("file-name") String fileName, HttpSession session, HttpServletResponse response) {
+        File file = fileService.findFile(fileName);
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+        response.setContentType("application/vnd.ms-excel");
+        try {
+            Files.copy(file.toPath(), response.getOutputStream());
+            response.getOutputStream().flush();
+        } catch (IOException e) {
+            throw new RuntimeException("IOError writing file to output stream");
         }
-        return null;
+
     }
 
 }
